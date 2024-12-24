@@ -1,0 +1,43 @@
+version: "3.9"
+
+x-common: &common
+  env_file:
+    - .env
+  stdin_open: true
+  tty: true
+
+services:
+  db:
+    <<: *common
+    image: postgres:16.2
+    volumes:
+      - myl-postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432"
+  app:
+    <<: *common
+    build:
+      context: .
+      dockerfile: "./Dockerfile"
+    command: bash -c "./bin/dev"
+    environment:
+      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
+      RAILS_ENV: "development"
+    volumes:
+      - .:/myl-deck-builder
+      - gems:/gems
+      - node_modules:/app/node_modules
+    ports:
+      - "3004:3004"
+      - "1433:1433"
+    links:
+      - db
+    depends_on:
+      - db
+volumes:
+  myl-postgres-data:
+    driver: local
+  gems:
+    driver: local
+  node_modules:
+    driver: local

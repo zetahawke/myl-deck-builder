@@ -1,0 +1,12 @@
+<% content_for :title, "Editing rarity" %>
+
+<h1>Editing rarity</h1>
+
+<%= render "form", rarity: @rarity %>
+
+<br>
+
+<div>
+  <%= link_to "Show this rarity", @rarity %> |
+  <%= link_to "Back to rarities", rarities_path %>
+</div>

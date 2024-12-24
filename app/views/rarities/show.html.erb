@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @rarity %>
+
+<div>
+  <%= link_to "Edit this rarity", edit_rarity_path(@rarity) %> |
+  <%= link_to "Back to rarities", rarities_path %>
+
+  <%= button_to "Destroy this rarity", @rarity, method: :delete %>
+</div>

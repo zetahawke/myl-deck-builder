@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Card types" %>
+
+<h1>Card types</h1>
+
+<div id="card_types">
+  <% @card_types.each do |card_type| %>
+    <%= render card_type %>
+    <p>
+      <%= link_to "Show this card type", card_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New card type", new_card_type_path %>
