@@ -9,90 +9,129 @@
 #   end
 
 
-puts "Creando artistas..."
+# puts "Creando artistas..."
 
-[
-  'Mauricio Herrera'
-  #...
-].each do |artist|
-  Artist.find_or_create_by(
-    name: artist
-  )
-end
+# [
+#   'Mauricio Herrera'
+#   # ...
+# ].each do |artist|
+#   Artist.find_or_create_by(
+#     name: artist
+#   )
+# end
 
-puts "Creando tipos de cartas..."
+# puts "Creando tipos de cartas..."
 
-[
-  'Tótem',
-  'Talismán',
-  'Oro Normal',
-  'Oro',
-  'Aliado',
-  'Arma'
-].each do |card_type|
-  CardType.find_or_create_by(
-    name: card_type
-  )
-end
+# [
+#   'Tótem',
+#   'Talismán',
+#   'Oro Normal',
+#   'Oro',
+#   'Aliado',
+#   'Arma'
+# ].each do |card_type|
+#   CardType.find_or_create_by(
+#     name: card_type
+#   )
+# end
 
-puts "Creando ediciones..."
+# puts "Creando ediciones..."
 
-[
-  {
-    name: 'helénica',
-    races: [
-      'Titán',
-      'Olímpico',
-      'Héroe'
-    ]
-  },
-  {
-    name: 'espada sagrada',
-    races: [
-      'Caballero',
-      'Dragón',
-      'Faerie'
-    ]
-  },
-  {
-    name: 'Hijos de Daana',
-    races: [
-      'Sombra',
-      'Desafiante',
-      'Defensor'
-    ]
-  },
-  {
-    name: 'Dominios de Ra',
-    races: [
-      'Eterno',
-      'Sacerdote',
-      'Faraón'
-    ]
-  }
-].each do |edition|
-  new_edition = Edition.find_or_create_by(
-    name: edition[:name]
-  )
+# [
+#   {
+#     name: 'helénica',
+#     races: [
+#       'Titán',
+#       'Olímpico',
+#       'Héroe'
+#     ]
+#   },
+#   {
+#     name: 'espada sagrada',
+#     races: [
+#       'Caballero',
+#       'Dragón',
+#       'Faerie'
+#     ]
+#   },
+#   {
+#     name: 'Hijos de Daana',
+#     races: [
+#       'Sombra',
+#       'Desafiante',
+#       'Defensor'
+#     ]
+#   },
+#   {
+#     name: 'Dominios de Ra',
+#     races: [
+#       'Eterno',
+#       'Sacerdote',
+#       'Faraón'
+#     ]
+#   }
+# ].each do |edition|
+#   new_edition = Edition.find_or_create_by(
+#     name: edition[:name]
+#   )
 
-  puts "Creando razas..."
-  edition[:races].each do |race|
-    Race.find_or_create_by(
-      name: race,
-      edition: new_edition
-    )
+#   puts "Creando razas..."
+#   edition[:races].each do |race|
+#     Race.find_or_create_by(
+#       name: race,
+#       edition: new_edition
+#     )
+#   end
+# end
+
+# puts "Creando rarezas de cartas..."
+
+# [
+#   'común',
+#   'Poco común',
+#   'Real',
+#   'Ultra real'
+# ].each do |rarity|
+#   Rarity.find_or_create_by(
+#     name: rarity
+#   )
+# end
+
+
+#### Read dump json file
+# ./dump.json
+
+###########################
+# {
+#   "code"=>"001",
+#   "slug"=>"gaia",
+#   "name"=>"Gaia",
+#   "rarity"=>"real",
+#   "race"=>"olimpico",
+#   "type"=>"aliado",
+#   "cost"=>"4",
+#   "damage"=>"2",
+#   "ability"=>
+#   "En tu Fase de Vigilia, sólo una vez por turno, puedes buscar un Aliado en tu Mazo Castillo y ponerlo en tu mano. ",
+#   "edition_id"=>"20",
+#   "edition_slug"=>"helenica",
+#   "edition"=>"20",
+#   "flavour"=>"Madre de la Creación, no olvides cantar mis penas.",
+#   "illustrator"=>"Waldo Retamales",
+#   "source_image"=>"https://api.myl.cl/static/cards/20/001.png",
+#   "image_path"=>"helenica/20/001.png"
+# }
+###########################
+
+require 'json'
+
+dump_data = JSON.parse(open('db/dump.json').read)
+
+# Iterating editions
+dump_data.each do |edition_cards|
+  edition_name = edition_cards.first['edition_slug']
+  # Iterating cards
+  edition_cards.each do |card|
+    card_to_builder_props
   end
-end
-
-puts "Creando rarezas de cartas..."
-
-[
-  'común',
-  'Poco común',
-  'Real',
-  'Ultra real'
-].each do |rarity|
-  Rarity.find_or_create_by(
-    name: rarity
-  )
 end

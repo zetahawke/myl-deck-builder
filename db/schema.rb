@@ -75,8 +75,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_23_005637) do
 
   create_table "races", force: :cascade do |t|
     t.string "name"
+    t.bigint "edition_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["edition_id"], name: "index_races_on_edition_id"
   end
 
   create_table "rarities", force: :cascade do |t|
@@ -105,4 +107,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_23_005637) do
   add_foreign_key "deck_cards", "cards"
   add_foreign_key "deck_cards", "decks"
   add_foreign_key "decks", "users"
+  add_foreign_key "races", "editions"
 end
