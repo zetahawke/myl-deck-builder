@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_23_005637) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_26_013540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,6 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_23_005637) do
     t.bigint "race_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "code"
     t.index ["artist_id"], name: "index_cards_on_artist_id"
     t.index ["card_type_id"], name: "index_cards_on_card_type_id"
     t.index ["edition_id"], name: "index_cards_on_edition_id"
@@ -71,6 +72,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_23_005637) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "code"
   end
 
   create_table "races", force: :cascade do |t|

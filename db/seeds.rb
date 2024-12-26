@@ -130,8 +130,10 @@ dump_data = JSON.parse(open('db/dump.json').read)
 # Iterating editions
 dump_data.each do |edition_cards|
   edition_name = edition_cards.first['edition_slug']
+  puts(edition_name)
   # Iterating cards
   edition_cards.each do |card|
-    card_to_builder_props
+    puts("building #{card.name}")
+    builder_properties = card_to_builder_props(card)
   end
 end

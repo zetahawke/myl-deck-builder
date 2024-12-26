@@ -5,33 +5,36 @@ x-common: &common
     - .env
   stdin_open: true
   tty: true
+  environment:
+    - "POSTGRES_USER=postgres"
+    - "POSTGRES_PASSWORD=password"
+    - "RAILS_ENV=development"
 
 services:
   db:
     <<: *common
-    image: postgres:16.2
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_POSTGRES_CPUS:-0}"
+          memory: "${DOCKER_POSTGRES_MEMORY:-0}"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
+    image: "postgres:16.2"
     volumes:
-      - myl-postgres-data:/var/lib/postgresql/data
-    ports:
-      - "5432"
+      - "myl-postgres-data:/var/lib/postgresql/data"
   app:
     <<: *common
     build:
       context: .
-      dockerfile: "./Dockerfile"
+      dockerfile: "./docker/app/development/Dockerfile"
     command: bash -c "./bin/dev"
-    environment:
-      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}"
-      RAILS_ENV: "development"
     volumes:
       - .:/myl-deck-builder
       - gems:/gems
       - node_modules:/app/node_modules
     ports:
       - "3004:3004"
-      - "1433:1433"
-    links:
-      - db
     depends_on:
       - db
 volumes:
