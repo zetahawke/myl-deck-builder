@@ -135,5 +135,7 @@ dump_data.each do |edition_cards|
   edition_cards.each do |card|
     puts("building #{card.name}")
     builder_properties = card_to_builder_props(card)
+
+    
   end
 end

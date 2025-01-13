@@ -8,7 +8,7 @@ class Card < ApplicationRecord
   belongs_to :deck, through: :deck_card
 
   class << self
-    def define_relation_for(type, attr)
+    def define_relation_for(type, current_attr_list)
       # case type
       # when "Rarity"
       #   Rarity.find_or_create_by(
@@ -20,7 +20,7 @@ class Card < ApplicationRecord
       # when "Edition"
       # end
 
-      class_eval(type).send("find_or_create_by", attr)
+      class_eval(type).send("find_or_create_by", current_attr_list)
     end
 
     def card_to_builder_props(obj)
