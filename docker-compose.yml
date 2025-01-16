@@ -1,3 +1,64 @@
+# x-common: &common
+#   env_file:
+#     - .env
+#   stdin_open: true
+#   tty: true
+#   environment:
+#     - RAILS_ENV=${RAILS_ENV}
+#     - POSTGRES_HOST=${POSTGRES_HOST}
+#     - POSTGRES_DB=${POSTGRES_DB}
+#     - POSTGRES_USER=${POSTGRES_USER}
+#     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#     - RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+
+# services:
+#   db:
+#     <<: *common
+#     image: "postgres:16.2"
+#     deploy:
+#       resources:
+#         limits:
+#           cpus: "${DOCKER_POSTGRES_CPUS:-0}"
+#           memory: "${DOCKER_POSTGRES_MEMORY:-0}"
+#     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+#     stop_grace_period: "3s"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+#     ports:
+#       - "5432:5432"
+#   web:
+#     <<: *common
+#     build: .
+#     command: "./bin/dev"
+#     develop:
+#       watch:
+#         - action: sync
+#           path: ./app
+#           target: /app
+#         - action: sync
+#           path: ./config
+#           target: /config
+#         - action: rebuild
+#           path: package.json
+#     volumes:
+#       - app-storage:/rails/storage
+#       - gems:/gems
+#       - node_modules:/app/node_modules
+#     depends_on:
+#       - db
+#     ports:
+#       - "3004:3004"
+
+# volumes:
+#   postgres_data:
+#     driver: local
+#   app-storage:
+#     driver: local
+#   gems:
+#     driver: local
+#   node_modules:
+#     driver: local
+
 x-common: &common
   env_file:
     - .env
@@ -14,7 +75,6 @@ x-common: &common
 services:
   db:
     <<: *common
-    image: "postgres:16.2"
     deploy:
       resources:
         limits:
@@ -22,39 +82,38 @@ services:
           memory: "${DOCKER_POSTGRES_MEMORY:-0}"
     restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
     stop_grace_period: "3s"
+    image: "postgres:16.2"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-  web:
+      - "myl-postgres-data:/var/lib/postgresql/data"
+  app:
     <<: *common
-    build: .
-    command: "./bin/dev"
+    build:
+      context: .
+      dockerfile: "./docker/app/development/Dockerfile"
+    command: bash -c "./bin/dev"
     develop:
       watch:
+        # - action: sync
+        #   path: ./app/web_app
+        #   target: /app/web_app
+        # - action: rebuild
+        #   path: ./config
+        #   target: /config
+        # - action: rebuild
+        #   path: package.json
         - action: sync
-          path: ./app
-          target: /app
-        - action: sync
-          path: ./config
-          target: /config
-        - action: rebuild
-          path: package.json
+          path: .
+          target: .
     volumes:
-      - app-storage:/rails/storage
+      - app:/app/web_app
       - gems:/gems
       - node_modules:/app/node_modules
-    depends_on:
-      - db
     ports:
       - "3004:3004"
-
+    depends_on:
+      - db
 volumes:
-  postgres_data:
-    driver: local
-  app-storage:
-    driver: local
-  gems:
-    driver: local
-  node_modules:
-    driver: local
+  app: {}
+  myl-postgres-data: {}
+  gems: {}
+  node_modules: {}

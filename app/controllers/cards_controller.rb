@@ -1,4 +1,4 @@
-class CardsController < ApplicationController
+class CardsController < BehindSessionController
   before_action :set_card, only: %i[ show edit update destroy ]
 
   # GET /cards or /cards.json

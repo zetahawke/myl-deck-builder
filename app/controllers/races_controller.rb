@@ -1,4 +1,4 @@
-class RacesController < ApplicationController
+class RacesController < BehindSessionController
   before_action :set_race, only: %i[ show edit update destroy ]
 
   # GET /races or /races.json

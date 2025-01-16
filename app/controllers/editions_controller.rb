@@ -1,4 +1,4 @@
-class EditionsController < ApplicationController
+class EditionsController < BehindSessionController
   before_action :set_edition, only: %i[ show edit update destroy ]
 
   # GET /editions or /editions.json
