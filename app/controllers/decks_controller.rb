@@ -3,7 +3,7 @@ class DecksController < ApplicationController
 
   # GET /decks or /decks.json
   def index
-    @decks = Deck.all
+    @decks = current_user.decks
   end
 
   # GET /decks/1 or /decks/1.json
@@ -12,7 +12,7 @@ class DecksController < ApplicationController
 
   # GET /decks/new
   def new
-    @deck = Deck.new
+    @deck = current_user.decks.new
   end
 
   # GET /decks/1/edit
@@ -21,7 +21,7 @@ class DecksController < ApplicationController
 
   # POST /decks or /decks.json
   def create
-    @deck = Deck.new(deck_params)
+    @deck = current_user.decks.new(deck_params)
 
     respond_to do |format|
       if @deck.save

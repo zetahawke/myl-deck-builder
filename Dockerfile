@@ -14,14 +14,39 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION
 
-# Rails app lives here
-WORKDIR /rails
-
 # # Set production environment
 # ENV RAILS_LOG_TO_STDOUT="1" \
 #     RAILS_SERVE_STATIC_FILES="true" \
 #     RAILS_ENV="development" \
 #     BUNDLE_WITHOUT="development"
+
+# Point Bundler at /gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
+ENV BUNDLE_PATH /gems
+ENV BUNDLE_HOME /gems
+# Increase how many threads Bundler uses when installing. Optional!
+ENV BUNDLE_JOBS 4
+
+# How many times Bundler will retry a gem download. Optional!
+ENV BUNDLE_RETRY 3
+
+# Where Rubygems will look for gems, similar to BUNDLE_ equivalents.
+ENV GEM_HOME /gems
+ENV GEM_PATH /gems
+
+ENV NODE_PATH /app/node_modules
+
+# Add /gems/bin to the path so any installed gem binaries are runnable from bash.
+ENV PATH /gems/bin:$PATH
+# Add /app/node_modules to the path so any installed package binaries are runnable from bash.
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Rails app lives here
+ENV RAILS_ROOT /rails
+RUN mkdir $RAILS_ROOT
+WORKDIR $RAILS_ROOT
+
+ENV RAILS_ENV=development
+ENV RACK_ENV=development
 
 # Install application gems
 COPY package.json ./
@@ -45,4 +70,5 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3004
-CMD ["./bin/rails", "server"]
+# CMD ["./bin/rails", "server", "-b 0.0.0.0", "-p 3004"]
+CMD ["./bin/dev"]
