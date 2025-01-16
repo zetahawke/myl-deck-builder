@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
+
   resources :decks
   resources :cards, only: %i[show index]
   # resources :races
   # resources :rarities
   # resources :artists
-  devise_for :users, only: %i[show]
+  # devise_for :users, only: %i[show]
   # resources :editions
   # resources :card_types
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -19,4 +23,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  root to: 'home#index'
 end

@@ -1,4 +1,4 @@
-class RaritiesController < ApplicationController
+class RaritiesController < BehindSessionController
   before_action :set_rarity, only: %i[ show edit update destroy ]
 
   # GET /rarities or /rarities.json

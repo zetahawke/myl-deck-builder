@@ -50,8 +50,9 @@ ENV PATH /gems/bin:$PATH
 # Add /app/node_modules to the path so any installed package binaries are runnable from bash.
 ENV PATH /app/node_modules/.bin:$PATH
 
-ENV RAILS_ROOT /myl-deck-builder
-RUN mkdir $RAILS_ROOT
+# Rails app lives here
+ENV RAILS_ROOT /app/web_app
+RUN mkdir -p $RAILS_ROOT
 WORKDIR $RAILS_ROOT
 
 ENV RAILS_ENV=development

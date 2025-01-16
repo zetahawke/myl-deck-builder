@@ -1,4 +1,4 @@
-class ArtistsController < ApplicationController
+class ArtistsController < BehindSessionController
   before_action :set_artist, only: %i[ show edit update destroy ]
 
   # GET /artists or /artists.json

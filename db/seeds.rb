@@ -133,9 +133,16 @@ dump_data.each do |edition_cards|
   puts(edition_name)
   # Iterating cards
   edition_cards.each do |card|
-    puts("building #{card.name}")
-    builder_properties = card_to_builder_props(card)
+    begin
+      puts("building #{card['name']}")
+      builder_properties = Card.card_to_builder_props(card)
+      new_card = Card.new(builder_properties)
 
-    
+      if !Card.find_by(name: new_card.name)
+        new_card.save!
+      end
+    rescue StandardError => e
+      puts e.message
+    end
   end
 end
