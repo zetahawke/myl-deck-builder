@@ -27,20 +27,32 @@ services:
     <<: *common
     build:
       context: .
-      dockerfile: "./docker/app/development/Dockerfile"
     command: bash -c "./bin/dev"
     volumes:
+<<<<<<< Updated upstream
       - .:/myl-deck-builder
       - gems:/gems
       - node_modules:/app/node_modules
+=======
+      - app_rails:/app/rails
+      - app_gems:/gems
+      - app_node_modules:/app/node_modules
+>>>>>>> Stashed changes
     ports:
       - "3004:3004"
     depends_on:
       - db
 volumes:
+<<<<<<< Updated upstream
   myl-postgres-data:
     driver: local
   gems:
     driver: local
   node_modules:
     driver: local
+=======
+  app_rails: {}
+  myl-postgres-data: {}
+  app_gems: {}
+  app_node_modules: {}
+>>>>>>> Stashed changes
