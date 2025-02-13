@@ -12,7 +12,7 @@ class DecksController < BehindSessionController
 
   # GET /decks/new
   def new
-    @deck = current_user.decks.new
+    @deck = current_user ? current_user.decks.new : Deck.new
   end
 
   # GET /decks/1/edit
