@@ -1,17 +1,35 @@
-<div id="<%= dom_id deck %>">
-  <p>
-    <strong>Name:</strong>
-    <%= deck.name %>
-  </p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Deck <%= deck.id %></h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Create a new deck</h6>
+  </div>
+  <div class="card-body">
+    
+    <div id="<%= dom_id deck %>">
+      <p>
+        <strong>Name:</strong>
+        <%= deck.name %>
+      </p>
 
-  <p>
-    <strong>Description:</strong>
-    <%= deck.description %>
-  </p>
+      <p>
+        <strong>Description:</strong>
+        <%= deck.description %>
+      </p>
 
-  <p>
-    <strong>User:</strong>
-    <%= deck.user_id %>
-  </p>
+      <p>
+        <strong>Cards count:</strong>
+        <%= deck.deck_cards.size %>
+      </p>
 
+    </div>
+
+  </div>
+  <div class="card-body">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <%= link_to "Show this deck", deck, class: 'btn btn-primary btn-sm me-md-22' %>
+      <%= link_to "Back to decks", decks_path, class: 'btn btn-primary btn-sm' %>
+    </div>
+  </div>
 </div>
+
+
