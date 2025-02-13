@@ -12,7 +12,7 @@ class DecksController < ApplicationController
 
   # GET /decks/new
   def new
-    @deck = Deck.new
+    @deck = current_user ? current_user.decks.new : Deck.new
   end
 
   # GET /decks/1/edit

@@ -1,11 +1,15 @@
 <% content_for :title, "New deck" %>
 
-<h1>New deck</h1>
-
-<%= render "form", deck: @deck %>
-
-<br>
-
-<div>
-  <%= link_to "Back to decks", decks_path %>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">New deck</h5>
+    <h6 class="card-subtitle mb-2 text-body-secondary">Create a new deck</h6>
+  </div>
+  <div class="card-body">
+    <%= render "form", deck: @deck %>
+  </div>
+  <div class="card-body">
+    <%= link_to "Back to decks", decks_path, class: 'btn btn-small' %>
+  </div>
 </div>
+
