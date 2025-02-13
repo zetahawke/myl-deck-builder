@@ -9,10 +9,10 @@ class CardsController < ApplicationController
     # @card_editions = Edition.all
     query = clean_query_params.reject { |q_p| q_p.blank? }
     if query.keys.size.positive?
-      @cards = Card.where(race_id: query[:card_race]) unless query[:card_race].blank?
-      @cards = Card.where(card_type_id: query[:card_type]) unless query[:card_type].blank?
-      @cards = Card.where(edition_id: query[:card_edition]) unless query[:card_edition].blank?
-      @cards = Card.where("lower(name) like ?", "%#{query[:card_name]}%") unless query[:card_name].blank?
+      @cards = @cards.where(race_id: query[:card_race]) unless query[:card_race].blank?
+      @cards = @cards.where(card_type_id: query[:card_type]) unless query[:card_type].blank?
+      @cards = @cards.where(edition_id: query[:card_edition]) unless query[:card_edition].blank?
+      @cards = @cards.where("lower(name) like ?", "%#{query[:card_name]}%") unless query[:card_name].blank?
     end
   end
 
