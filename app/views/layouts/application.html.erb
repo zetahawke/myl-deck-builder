@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" data-bs-theme="dark">
   <head>
     <title><%= content_for(:title) || "Myl Deck Builder" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -24,8 +24,10 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container-lg">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </div>
   </body>
 </html>
