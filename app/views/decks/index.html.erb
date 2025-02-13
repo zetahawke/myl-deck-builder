@@ -8,14 +8,12 @@
       <%= link_to "New deck", new_deck_path, class: 'btn float-end btn-small btn-primary' %>
     </div>
   </div>
-  <div class="row">
-    <div id="decks">
-      <% @decks.each do |deck| %>
-        <div class="col-3 col-xs-12">
-          <%= render deck %>
-        </div>
-      <% end %>
-    </div>
+  <div class="row row-cols-4 gap-3" id="decks">
+    <% @decks.each do |deck| %>
+      <div class="col px-2">
+        <%= render deck %>
+      </div>
+    <% end %>
   </div>
 </div>
 
