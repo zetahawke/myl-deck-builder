@@ -1,19 +1,19 @@
 <%= form_with url: "/cards", method: :get do |form| %>
   <div class="form-group">
     <label for="card_name">Card name</label>
-    <%= form.text_field :card_name, placeholder: "card name...", class: "form-control" %>
+    <%= form.text_field :card_name, placeholder: "card name...", value: params[:card_name], class: "form-control" %>
   </div>
   <div class="form-group">
     <label for="card_type">Card Type</label>
-    <%= form.collection_select :card_type, CardType.order(:name), :id, :name, prompt: true , class: "form-control" %>
+    <%= form.collection_select :card_type, CardType.order(:name), :id, :name, selected: params[:card_type], prompt: true , class: "form-control" %>
   </div>
   <div class="form-group">
     <label for="card_race">Card Race</label>
-    <%= form.collection_select :card_race, Race.all.distinct(:name).order(:name), :id, :name, prompt: true , class: "form-control" %>
+    <%= form.collection_select :card_race, Race.all.distinct(:name).order(:name), :id, :name, selected: params[:card_race], prompt: true , class: "form-control" %>
   </div>
   <div class="form-group">
-    <label for="card_edition">Card Race</label>
-    <%= form.collection_select :card_edition, Edition.order(:name), :id, :name, prompt: true , class: "form-control" %>
+    <label for="card_edition">Card Edition</label>
+    <%= form.collection_select :card_edition, Edition.order(:name), :id, :name, selected: params[:card_edition], prompt: true , class: "form-control" %>
   </div>
   <%= form.submit "Search" %>
 <% end %>
