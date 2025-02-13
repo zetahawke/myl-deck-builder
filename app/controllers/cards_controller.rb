@@ -4,6 +4,16 @@ class CardsController < ApplicationController
   # GET /cards or /cards.json
   def index
     @cards = Card.all
+    # @card_types = CardType.all
+    # @card_races = Race.all.uniq(:name)
+    # @card_editions = Edition.all
+    query = clean_query_params.reject { |q_p| q_p.blank? }
+    if query.keys.size.positive?
+      @cards = Card.where("lower(name) like ?", "%#{query[:card_name]}%") unless query[:card_name].blank?
+      @cards = Card.where(race_id: query[:card_race]) unless query[:card_race].blank?
+      @cards = Card.where(card_type_id: query[:card_type]) unless query[:card_type].blank?
+      @cards = Card.where(edition_id: query[:card_edition]) unless query[:card_edition].blank?
+    end
   end
 
   # GET /cards/1 or /cards/1.json
@@ -66,5 +76,9 @@ class CardsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def card_params
       params.expect(card: [ :name, :legend, :artist_id, :card_type_id, :edition_id, :cost, :force, :ability, :rarity_id, :race_id ])
+    end
+
+    def clean_query_params
+      params.permit(:card_type, :card_race, :card_edition, :card_name)
     end
 end

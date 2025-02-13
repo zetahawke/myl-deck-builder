@@ -5,7 +5,7 @@ class Card < ApplicationRecord
   belongs_to :rarity
   belongs_to :race
   belongs_to :deck_card
-  belongs_to :deck, through: :deck_card
+  has_many :deck, through: :deck_card
 
   class << self
     def define_relation_for(type, current_attr_list)
