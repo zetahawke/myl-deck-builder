@@ -28,10 +28,11 @@
 
   <body>
     <%= render 'layouts/navbar' %>
-    <div class="container-lg">
+    <div class="container-lg min-vh-100">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>
     </div>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
