@@ -11,7 +11,7 @@
   <div class="row row-cols-4 gap-3" id="decks">
     <% @decks.each do |deck| %>
       <div class="col px-2">
-        <%= render deck %>
+        <%= render deck, show: true %>
       </div>
     <% end %>
   </div>
