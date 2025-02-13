@@ -1,10 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @deck %>
-
-<div>
-  <%= link_to "Edit this deck", edit_deck_path(@deck) %> |
-  <%= link_to "Back to decks", decks_path %>
-
-  <%= button_to "Destroy this deck", @deck, method: :delete %>
+<div class="row mb-2">
+  <div class="d-grid gap-2 d-md-flex">
+    <%= button_to "Destroy this deck", @deck, method: :delete, class: 'btn btn-outline-danger btn-sm float-end' %>
+  </div>
 </div>
+
+<div class="row">
+  <%= render @deck, show: false%>
+</div>
+

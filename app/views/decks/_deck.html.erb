@@ -26,7 +26,9 @@
   </div>
   <div class="card-body">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <%= link_to "Show this deck", deck, class: 'btn btn-primary btn-sm me-md-22' %>
+      <% if show %>
+        <%= link_to "Show this deck", deck, class: 'btn btn-primary btn-sm me-md-22' %>
+      <% end %>
       <%= link_to "Back to decks", decks_path, class: 'btn btn-primary btn-sm' %>
     </div>
   </div>

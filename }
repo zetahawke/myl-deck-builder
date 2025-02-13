@@ -1,0 +1,36 @@
+Adding grid vieew
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch Feat/main-cards
+# Changes to be committed:
+#	modified:   app/views/decks/index.html.erb
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/app/views/decks/index.html.erb b/app/views/decks/index.html.erb
+index d2ebf7a..6b7dffe 100644
+--- a/app/views/decks/index.html.erb
++++ b/app/views/decks/index.html.erb
+@@ -8,14 +8,12 @@
+       <%= link_to "New deck", new_deck_path, class: 'btn float-end btn-small btn-primary' %>
+     </div>
+   </div>
+-  <div class="row">
+-    <div id="decks">
+-      <% @decks.each do |deck| %>
+-        <div class="col-3 col-xs-12">
+-          <%= render deck %>
+-        </div>
+-      <% end %>
+-    </div>
++  <div class="row row-cols-4 gap-3" id="decks">
++    <% @decks.each do |deck| %>
++      <div class="col px-2">
++        <%= render deck %>
++      </div>
++    <% end %>
+   </div>
+ </div>
+ 
