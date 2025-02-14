@@ -1,12 +1,10 @@
 <p style="color: green"><%= notice %></p>
-
 <div class="row mb-2">
   <div class="d-grid gap-2 d-md-flex">
     <%= button_to "Destroy this deck", @deck, method: :delete, class: 'btn btn-outline-danger btn-sm float-end' %>
   </div>
 </div>
-
 <div class="row">
   <%= render @deck, show: false%>
 </div>
-
+<br>

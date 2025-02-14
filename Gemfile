@@ -61,3 +61,5 @@ group :development do
 end
 
 gem "dotenv"
+gem 'slim'
+gem 'htmlbeautifier'
