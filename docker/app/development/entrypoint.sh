@@ -6,6 +6,12 @@ if [ -z "${LD_PRELOAD+x}" ]; then
     export LD_PRELOAD
 fi
 
+# If running the rails server then create or migrate existing database
+if [ "${@: -2:1}" == "./bin/dev" ]]; then
+  ./bin/rails db:create
+  ./bin/rails db:prepare
+fi
+
 # Remove a potentially pre-existing server.pid for Rails.
 if [ -f tmp/pids/server.pid ]; then
   rm -f /chv_transvip/tmp/pids/server.pid
