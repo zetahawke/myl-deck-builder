@@ -20,7 +20,7 @@ class Card < ApplicationRecord
       # when "Edition"
       # end
 
-      class_eval(type).send("find_or_create_by", current_attr_list)
+      class_eval("::#{type}").send("find_or_create_by", current_attr_list)
     end
 
     def card_to_builder_props(obj)
@@ -32,18 +32,23 @@ class Card < ApplicationRecord
         force: obj[:damage],
         ability: obj[:ability],
         rarity: define_relation_for(
+          'Rarity',
           name: obj[:rarity]
         ),
         race: define_relation_for(
+          'Race',
           name: obj[:race]
         ),
         artist: define_relation_for(
+          'Artist',
           name: obj[:illustrator]
         ),
         card_type: define_relation_for(
+          'CardType',
           name: obj[:type]
         ),
         edition: define_relation_for(
+          'Edition',
           name: obj[:edition_slug],
           code: obj[:edition_id]
         )
