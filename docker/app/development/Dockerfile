@@ -30,8 +30,8 @@ RUN apt-get update
 RUN apt-get install -y imagemagick libvips --fix-missing
 
 # Point Bundler at /gems. This will cause Bundler to re-use gems that have already been installed on the gems volume
-ENV BUNDLE_PATH /gems
-ENV BUNDLE_HOME /gems
+ENV BUNDLE_PATH /app/gems
+ENV BUNDLE_HOME /app/gems
 
 # Increase how many threads Bundler uses when installing. Optional!
 ENV BUNDLE_JOBS 4
@@ -40,8 +40,8 @@ ENV BUNDLE_JOBS 4
 ENV BUNDLE_RETRY 3
 
 # Where Rubygems will look for gems, similar to BUNDLE_ equivalents.
-ENV GEM_HOME /gems
-ENV GEM_PATH /gems
+ENV GEM_HOME /app/gems
+ENV GEM_PATH /app/gems
 
 ENV NODE_PATH /app/node_modules
 
@@ -51,19 +51,19 @@ ENV PATH /gems/bin:$PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Rails app lives here
-ENV RAILS_ROOT /app/web_app
-RUN mkdir -p $RAILS_ROOT
-WORKDIR $RAILS_ROOT
+ENV RAILS_ROOT /rails_app/web
+
+WORKDIR ${RAILS_ROOT}
 
 ENV RAILS_ENV=development
 ENV RACK_ENV=development
 
-COPY Gemfile ./
-COPY package.json ./
+COPY Gemfile Gemfile.lock ./
+COPY package.json yarn.lock ./
 
 RUN bundle install --jobs 5 --retry 5
 RUN yarn install --check-files
-COPY . $RAILS_ROOT
+COPY . .
 RUN yarn build:css
 
 # Add a script to be executed every time the container starts.
