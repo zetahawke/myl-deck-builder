@@ -1,3 +1,5 @@
-<% @deck.cards.each do |card| %>
-  <%= render 'card_card', card: card, from_card_list: false %>
-<% end%>
+<div class="row row-cols-6" id="decks">
+  <% @deck.cards.order(:name).each do |card| %>
+    <%= render 'card_card', card: card, from_card_list: false %>
+  <% end%>
+</div>

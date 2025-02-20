@@ -1,5 +1,5 @@
 class DecksController < BehindSessionController
-  before_action :set_deck, only: %i[ show edit update destroy ]
+  before_action :set_deck, only: %i[ show edit update destroy add_card remove_card ]
 
   # GET /decks or /decks.json
   def index
@@ -16,6 +16,7 @@ class DecksController < BehindSessionController
       @search_cards = @search_cards.where(card_type_id: query[:card_type]) unless query[:card_type].blank?
       @search_cards = @search_cards.where(edition_id: query[:card_edition]) unless query[:card_edition].blank?
       @search_cards = @search_cards.where("lower(name) like ?", "%#{query[:card_name]}%") unless query[:card_name].blank?
+      @search_cards = @search_cards.order(:name)
     end
   end
 
@@ -66,10 +67,40 @@ class DecksController < BehindSessionController
     end
   end
 
+  def add_card
+    cards_vinculated = @deck.deck_cards.where(card_id: params[:card_id])
+    puts cards_vinculated.size
+    respond_to do |format|
+      if cards_vinculated.size < 3 || @deck.deck_cards.size == 50
+        @deck.deck_cards.create(card_id: params[:card_id])
+        format.html { redirect_back_or_to @deck, notice: "Deck was successfully updated." }
+        format.json { render :show, status: :ok, location: @deck }
+      else
+        format.html { render :edit, status: :unprocessable_entity, notice: "Already reached max amount of that card in the deck or deck max size (50)." }
+        format.json { render json: @deck.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def remove_card
+    cards_vinculated = @deck.deck_cards.where(card_id: params[:card_id])
+    puts cards_vinculated.size
+    respond_to do |format|
+      begin
+        cards_vinculated.first.destroy
+        format.html { redirect_back_or_to @deck, notice: "Deck was successfully updated." }
+        format.json { render :show, status: :ok, location: @deck }
+      rescue StandardError => _e
+        format.html { render :edit, status: :unprocessable_entity, notice: "Already reached max amount of that card in the deck." }
+        format.json { render json: @deck.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_deck
-    @deck = Deck.find(params.expect(:id))
+    @deck = Deck.find_by(id: params[:id]|| params[:deck_id])
   end
 
   # Only allow a list of trusted parameters through.

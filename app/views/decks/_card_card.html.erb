@@ -1,9 +1,27 @@
-<div class="card" style="width: 18rem;">
-  <%# <img src="..." class="card-img-top" alt="..."> %>
-  <%= image_tag "#{card.img_path}", { class: 'card-img-top' } %>
-  <div class="card-body">
-    <h5 class="card-title"><%= card.name %></h5>
-    <p class="card-text"><%= card.ability %>.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+<div class="col px-2">
+  <div class="card" style="width: 12rem;">
+    <%# <img src="..." class="card-img-top" alt="..."> %>
+    <%= image_tag "#{card.img_path}", { class: 'card-img-top' } %>
+    <div class="card-body">
+      <h5 class="card-title"><%= card.name %></h5>
+      <a class="btn btn-sm" data-bs-toggle="collapse" href="#cardDetails<%= card.id %>" role="button" aria-expanded="false" aria-controls="cardDetails<%= card.id %>">
+        Details...
+      </a>
+      <div class="collapse" id="cardDetails<%= card.id %>">
+        <div class="card card-body">
+          <p class="card-text">Ability: <%= card.ability %></p>
+          <p class="card-text">Cost: <%= card.cost %></p>
+          <p class="card-text">Force: <%= card.force %></p>
+          <p class="card-text">Artist: <%= card.artist&.name %></p>
+          <p class="card-text">Edition: <%= card.edition&.name %></p>
+          <p class="card-text">Card type: <%= card.card_type&.name %></p>
+        </div>
+      </div>
+      <% if from_card_list %>
+        <%= link_to 'Add', deck_add_card_path(@deck, card_id: card.id, query: params.permit!), data: { turbo: false }, method: :post, class: 'btn btn-outline-primary' %>
+      <% else %>
+        <%= link_to 'Remove', deck_remove_card_path(@deck, card_id: card.id), data: { turbo: false }, method: :post, class: 'btn btn-outline-danger' %>
+      <% end %>
+    </div>
   </div>
 </div>

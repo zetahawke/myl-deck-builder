@@ -1,4 +1,7 @@
 <%= render "search" %>
-<% @search_cards.each do |card| %>
-  <%= render 'card_card', card: card, from_card_list: true %>
-<% end %>
+<br>
+<div class="row row-cols-6" id="decks">
+  <% @search_cards.each do |card| %>
+    <%= render 'card_card', card: card, from_card_list: true %>
+  <% end %>
+</div>

@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    sessions: 'users/sessions'
+    sessions: "users/sessions"
   }
 
-  resources :decks
+  resources :decks do
+    get :add_card
+    get :remove_card
+  end
   resources :cards, only: %i[show index]
   # resources :races
   # resources :rarities
@@ -23,5 +26,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root to: 'home#index'
+  root to: "home#index"
 end
