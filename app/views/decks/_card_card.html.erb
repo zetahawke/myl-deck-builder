@@ -1,0 +1,9 @@
+<div class="card" style="width: 18rem;">
+  <%# <img src="..." class="card-img-top" alt="..."> %>
+  <%= image_tag "#{card.img_path}", { class: 'card-img-top' } %>
+  <div class="card-body">
+    <h5 class="card-title"><%= card.name %></h5>
+    <p class="card-text"><%= card.ability %>.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>

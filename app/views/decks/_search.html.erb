@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <%= form_with url: deck_path(@deck), method: :get, class: "row" do |form| %>
+      <div class="col-4">
+        <div class="form-group">
+          <%= form.text_field :card_name, placeholder: "Card name contains", value: params[:card_name], class: "form-control" %>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <%= form.collection_select :card_type, CardType.order(:name), :id, :name, { prompt: "Card type", selected: params[:card_type] }, { class: "form-select" } %>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="form-group">
+          <%= form.collection_select :card_race, Race.all.distinct(:name).order(:name), :id, :name, { selected: params[:card_race], prompt: "Race..." }, { class: "form-select" } %>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <%= form.collection_select :card_edition, Edition.order(:name), :id, :name, { selected: params[:card_edition], prompt: "Edition..." }, { class: "form-select" } %>
+        </div>
+      </div>
+      <div class="col-1">
+        <div class="form-group">
+          <%= form.submit "Search", class: "btn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

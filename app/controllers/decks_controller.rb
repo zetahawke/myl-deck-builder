@@ -8,6 +8,15 @@ class DecksController < BehindSessionController
 
   # GET /decks/1 or /decks/1.json
   def show
+    @search_cards = []
+    query = clean_query_params.reject { |q_p| q_p.blank? }
+    if query.keys.size >= 2 || !query[:card_name].blank?
+      @search_cards = Card.all
+      @search_cards = @search_cards.where(race_id: query[:card_race]) unless query[:card_race].blank?
+      @search_cards = @search_cards.where(card_type_id: query[:card_type]) unless query[:card_type].blank?
+      @search_cards = @search_cards.where(edition_id: query[:card_edition]) unless query[:card_edition].blank?
+      @search_cards = @search_cards.where("lower(name) like ?", "%#{query[:card_name]}%") unless query[:card_name].blank?
+    end
   end
 
   # GET /decks/new
@@ -58,13 +67,17 @@ class DecksController < BehindSessionController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_deck
-      @deck = Deck.find(params.expect(:id))
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_deck
+    @deck = Deck.find(params.expect(:id))
+  end
 
-    # Only allow a list of trusted parameters through.
-    def deck_params
-      params.expect(deck: [ :name, :description, :user_id ])
-    end
+  # Only allow a list of trusted parameters through.
+  def deck_params
+    params.expect(deck: [ :name, :description, :user_id ])
+  end
+
+  def clean_query_params
+    params.permit(:card_type, :card_race, :card_edition, :card_name)
+  end
 end

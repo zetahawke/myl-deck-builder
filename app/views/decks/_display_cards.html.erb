@@ -1,0 +1,4 @@
+<%= render "search" %>
+<% @search_cards.each do |card| %>
+  <%= render 'card_card', card: card, from_card_list: true %>
+<% end %>
