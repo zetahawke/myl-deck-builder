@@ -1,0 +1,28 @@
+databases:
+  - name: myl
+    databaseName: myl
+    user: postgres
+    plan: free
+
+# Exported from Render on 2025-02-24T20:27:04Z
+services:
+  - type: web
+    name: myl-deck-builder
+    runtime: ruby
+    repo: https://github.com/zetahawke/myl-deck-builder
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: myl
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: WEB_CONCURRENCY
+        sync: false
+        value: 2 # sensible default
+    region: oregon
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec rails server"
+    healthCheckPath: /up
+version: "1"
