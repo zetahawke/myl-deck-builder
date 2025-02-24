@@ -1,7 +1,7 @@
 databases:
   - name: myl
     databaseName: myl
-    user: postgres
+    user: myluser
     plan: free
 
 # Exported from Render on 2025-02-24T20:27:04Z
