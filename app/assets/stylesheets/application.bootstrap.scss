@@ -2,3 +2,20 @@
 @import 'bootstrap-icons/font/bootstrap-icons';
 
 $enable-grid-classes: true;
+
+.card-detail-card {
+    transition: all 0.3s;
+    .card-details {
+        display: none;
+    }
+}
+
+.card-detail-card:hover {
+    transform: scale(1.15);
+    z-index: 1000;
+    
+    .card-details {
+        transition: all 0.3s;
+        display: block;
+    }
+}

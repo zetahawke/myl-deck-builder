@@ -1,8 +1,8 @@
-<div class="col px-2">
-  <div class="card" style="width: 12rem;">
+<div class="col ml-n3 col-sm-auto my-3" style="margin-left: -120px;">
+  <div class="card card-detail-card" style="max-width: 12rem; min-width: 8rem;">
     <%# <img src="..." class="card-img-top" alt="..."> %>
     <%= image_tag "#{card.img_path}", { class: 'card-img-top' } %>
-    <div class="card-body">
+    <div class="card-body card-details">
       <h5 class="card-title"><%= card.name %></h5>
       <a class="btn btn-sm" data-bs-toggle="collapse" href="#cardDetails<%= card.id %>" role="button" aria-expanded="false" aria-controls="cardDetails<%= card.id %>">
         Details...

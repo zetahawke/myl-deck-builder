@@ -1,5 +1,10 @@
-<div class="row row-cols-6" id="decks">
-  <% @deck.cards.order(:name).each do |card| %>
-    <%= render 'card_card', card: card, from_card_list: false %>
+<div class="row" style="padding-left: 120px;" id="decks">
+  <% @deck.cards.order(:card_type_id).group_by { |card| card.card_type }.each do |card_type, cards| %>
+    <div class="row">
+      <% cards.each do |card| %>
+        <%= render 'card_card', card: card, from_card_list: false %>
+      <% end %>
+    </div>
+    <br>
   <% end%>
 </div>
